@@ -30,11 +30,16 @@ namespace WorldCitiesApi.Controllers
                 });
             }
 
+            IList<string> list = await _userManager.GetRolesAsync(user);
+
             JwtSecurityToken secToken = await _jwtHandler.GetTokenAsync(user);
             string? jwt = new JwtSecurityTokenHandler().WriteToken(secToken);
+
+
             return Ok(new LoginResult {
                 Success = true,
-                Message = "Login successful",
+                /*                Message = "Login successful",*/
+                Message = list[0],
                 Token = jwt
             });
         }
